@@ -3,10 +3,19 @@ import authRouter from "./controllers/authController.js"
 import userRouter from "./controllers/userController.js";
 import chatRouters from "./controllers/chatController.js";
 import messageRouters from "./controllers/messageController.js";
+import cors from 'cors';
 
 
 
 const app = express();
+
+app.use(
+    cors({
+        origin: "http://localhost:5173",
+        methods: ["GET", "POST", "PUT", "DELETE"],
+        credentials: true, 
+    })
+);
 
 app.use(express.json());
 

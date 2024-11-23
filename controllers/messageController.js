@@ -31,4 +31,17 @@ messageRouter.post("/send-message", authMiddleware, async (req, res) => {
     }
 })
 
+messageRouter.get('/ -messages/:chatId', authMiddleware , async (req, res)=> {
+    try {
+        const allMessages = await Message.find({chatId: req.params.chatId})
+                .sort({createdAt: 1})
+        res.status(200).send({"message": "Messages fetched successfully", 
+            data: allMessages
+        })
+    }
+    catch (error) {
+        res.status(400).send({message: error.message});
+    }
+})
+
 export default messageRouter;

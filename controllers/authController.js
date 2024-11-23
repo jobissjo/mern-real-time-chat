@@ -9,7 +9,7 @@ router.post('/signup', async (req, res) => {
     try {
         // User Exists
         const user = await User.findOne({email: req.body.email})
-
+        
         if (user){
             return res.status(400).send({message: "User already exists"})
         }
@@ -46,7 +46,7 @@ router.post('/login', async (req, res) => {
         // Generate JWT Token
     
         const token = jwt.sign({userId: user._id}, process.env.SECRET_KEY)
-
+        
         return res.send({message: "User logged in successfully",
             token: token
         })
