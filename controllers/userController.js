@@ -18,7 +18,7 @@ userRouter.get('/get-logged-user', authMiddleware, async (req, res) => {
     }
 })
 
-userRouter.get('/get-all-usesr', authMiddleware, async (req, res) => {
+userRouter.get('/get-all-users', authMiddleware, async (req, res) => {
     try {
         const allUsers = await User.find({_id: {$ne: req.body.userId}})
 
