@@ -2,6 +2,7 @@ import {Router} from "express";
 import User from "./../models/users.js";
 import authMiddleware from "../middlewares/authMiddleware.js";
 
+
 const userRouter = Router();
 
 userRouter.get('/get-logged-user', authMiddleware, async (req, res) => {

@@ -15,11 +15,12 @@ messageRouter.post("/send-message", authMiddleware, async (req, res) => {
         // currentChat.lastMessage = savedMessage._id;
         // await currentChat.save();
 
-        Chat.findOneAndUpdate({_id: req.body.chatId}, 
+        const chat = await Chat.findOneAndUpdate({_id: req.body.chatId}, 
             {
             lastMessage: savedMessage._id,
             $inc: {unreadMessageCount: 1}}
         )
+        console.log(chat);
 
         res.status(201).send({
             "message": "Message send successfully",
@@ -27,11 +28,11 @@ messageRouter.post("/send-message", authMiddleware, async (req, res) => {
         })
 
     }catch (err) {
-        res.status(400).send({message: error.message});
+        res.status(400).send({message: err.message});
     }
 })
 
-messageRouter.get('/ -messages/:chatId', authMiddleware , async (req, res)=> {
+messageRouter.get('/get-all-messages/:chatId', authMiddleware , async (req, res)=> {
     try {
         const allMessages = await Message.find({chatId: req.params.chatId})
                 .sort({createdAt: 1})
