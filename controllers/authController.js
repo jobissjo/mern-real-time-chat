@@ -1,11 +1,22 @@
-import { Router } from "express";
 import User from "../models/users.js"
 import bcrypt from "bcryptjs"
 import jwt from "jsonwebtoken"
+import {verifyEmailService} from "../services/authService.js"
+import message from "../models/message.js"
 
-const router = Router();
 
-router.post('/signup', async (req, res) => {
+const verifyEmail = async (req, res) => {
+    try{
+        // User Exists
+        await verifyEmailService(req.body)
+        res.status(200).send({message: "Otp send to your email address successfully"})
+    }
+    catch (error) {
+        res.status(400).send({message: error.message})
+    }
+}
+
+const signUpUser =  async (req, res) => {
     try {
         // User Exists
         const user = await User.findOne({email: req.body.email})
@@ -29,9 +40,9 @@ router.post('/signup', async (req, res) => {
     catch (error) {
         res.status(400).send({message: error.message})
     }
-})
+}
 
-router.post('/login', async (req, res) => {
+const loginUser = async (req, res) => {
     try {
         // User Exists
         const user = await User.findOne({email: req.body.email});
@@ -57,6 +68,6 @@ router.post('/login', async (req, res) => {
     }
     
     
-})
+}
 
-export default router
+export { verifyEmail, signUpUser, loginUser };

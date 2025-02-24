@@ -5,7 +5,7 @@ import Message from "../models/message.js";
 
 const chatRouters =  Router()
 
-chatRouters.post('/create-new-chat', authMiddleware, async (req, res) => {
+const createNewChat = async (req, res) => {
     try {
         const chat = new Chat(req.body);
         const savedChat = await chat.save()
@@ -20,9 +20,9 @@ chatRouters.post('/create-new-chat', authMiddleware, async (req, res) => {
     catch (error) {
         res.status(400).send({ message: error.message });
     }
-})
+}
 
-chatRouters.get("/get-all-chats", authMiddleware, async (req, res) => {
+const getAllChats =  async (req, res) => {
     try {
         const currentUser = req.body.userId;
         const allChats = await Chat.find({members: {$in: currentUser}})
@@ -38,10 +38,10 @@ chatRouters.get("/get-all-chats", authMiddleware, async (req, res) => {
     catch (error) {
         res.status(400).send({ message: error.message });
     }
-})
+}
 
 
-chatRouters.post("/clear-unread-message", authMiddleware, async (req, res)=> { 
+const clearUnreadMsg = async (req, res)=> { 
     try{
         const chatId = req.body.chatId;
 
@@ -75,6 +75,6 @@ chatRouters.post("/clear-unread-message", authMiddleware, async (req, res)=> {
 
         })
     }
-})
+}
 
-export default chatRouters;
+export {clearUnreadMsg, getAllChats, createNewChat}

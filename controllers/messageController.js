@@ -5,7 +5,7 @@ import Message from "../models/message.js";
 
 const messageRouter = new Router();
 
-messageRouter.post("/send-message", authMiddleware, async (req, res) => {
+const sendMessage = async (req, res) => {
     try{
         const newMessage =  new Message(req.body);
         const savedMessage = await newMessage.save();
@@ -30,9 +30,9 @@ messageRouter.post("/send-message", authMiddleware, async (req, res) => {
     }catch (err) {
         res.status(400).send({message: err.message});
     }
-})
+}
 
-messageRouter.get('/get-all-messages/:chatId', authMiddleware , async (req, res)=> {
+const getAllMessages = async (req, res)=> {
     try {
         const allMessages = await Message.find({chatId: req.params.chatId})
                 .sort({createdAt: 1})
@@ -43,6 +43,6 @@ messageRouter.get('/get-all-messages/:chatId', authMiddleware , async (req, res)
     catch (error) {
         res.status(400).send({message: error.message});
     }
-})
+}
 
-export default messageRouter;
+export {getAllMessages,  sendMessage};

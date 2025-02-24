@@ -1,12 +1,12 @@
 import express from "express";
-import authRouter from "./controllers/authController.js"
-import userRouter from "./controllers/userController.js";
-import chatRouters from "./controllers/chatController.js";
-import messageRouters from "./controllers/messageController.js";
+import authRouter from "./routes/authRoutes.js"
+import userRouter from "./routes/userRoutes.js";
+import chatRouters from "./routes/chatRoutes.js";
+import messageRouters from "./routes/messageRoutes.js";
 import {createServer} from 'http'
 import { Server } from 'socket.io';
 import cors from 'cors'
-import message from "./models/message.js";
+
 
 
 const app = express();
