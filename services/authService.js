@@ -1,5 +1,7 @@
-import redis from '../config/redisConfig';
+import redis from '../config/redisConfig.js';
 import crypto from 'crypto'
+import User from '../models/users.js';
+import bcrypt from "bcryptjs"
 
 export const verifyEmailService = async (emailData) => {
     const {email} = emailData;
@@ -20,4 +22,27 @@ export const verifyEmailService = async (emailData) => {
     console.log("otp", otp);
     
 
+}
+
+
+export const signUpUserService = async (userData) => {
+    const {otp, email, password} = userData;
+    const user = await User.findOne({email})
+
+    const otp_value = await redis.get(`${email}_otp`);
+    console.error("otp", otp_value, "entered_otp", otp)
+    if (!otp_value){
+        throw new Error("OTP expired")
+    }
+    if (otp_value !== otp){
+        throw new Error("Invalid OTP")
+    }
+            
+    if (user){
+        throw new Error("User already exists")
+    }
+    const hashedPassword = await bcrypt.hash(password, 10)
+    userData.password = hashedPassword
+    const newUser = new User(userData)
+    await newUser.save()
 }

@@ -1,7 +1,7 @@
 import User from "../models/users.js"
 import bcrypt from "bcryptjs"
 import jwt from "jsonwebtoken"
-import {verifyEmailService} from "../services/authService.js"
+import {verifyEmailService, signUpUserService} from "../services/authService.js"
 import message from "../models/message.js"
 
 
@@ -19,22 +19,8 @@ const verifyEmail = async (req, res) => {
 const signUpUser =  async (req, res) => {
     try {
         // User Exists
-        const user = await User.findOne({email: req.body.email})
-        
-        if (user){
-            return res.status(400).send({message: "User already exists"})
-        }
-
-
-        // Encrypt the password
-        const hashedPassword = await bcrypt.hash(req.body.password, 10)
-        req.body.password = hashedPassword
-
-        // Create a new user, save in database
-        const newUser = new User(req.body)
-        await newUser.save()
-
-        return res.status(201).send({message: "User created successfully"});
+        await signUpUserService(req.body)
+        res.status(200).send({message: "User created successfully"})
 
     }
     catch (error) {
