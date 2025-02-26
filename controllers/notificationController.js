@@ -1,4 +1,4 @@
-import { getNotificationOfUser, markNotificationAsRead, clearAllNotificationOfUser } from "../services/notificationService";
+import { getNotificationOfUser, markNotificationAsRead, clearAllNotificationOfUser } from "../services/notificationService.js";
 
 
 const notificationList = async (req, res)=> {

@@ -1,4 +1,4 @@
-import { acceptFriendRequest, sendFriendRequest, rejectFriendRequest, getFriendRequests, cancelFriendRequest } from "../services/friendRequestService";
+import { acceptFriendRequest, sendFriendRequest, rejectFriendRequest, getFriendRequests, cancelFriendRequest } from "../services/friendRequestService.js";
 
 const sendFriendRequestController = async (req, res) => {
     try {

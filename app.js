@@ -6,6 +6,8 @@ import messageRouters from "./routes/messageRoutes.js";
 import {createServer} from 'http'
 import { Server } from 'socket.io';
 import cors from 'cors'
+import friendRequestRouter from "./routes/friendRequest.js";
+import notificationRouter from "./routes/notificationRoutes.js";
 
 
 
@@ -42,6 +44,9 @@ app.use('/api/auth', authRouter);
 app.use('/api/user', userRouter);
 app.use('/api/chat', chatRouters);
 app.use('/api/message', messageRouters);
+app.use('/api/friend', friendRequestRouter);
+app.use('api/notification', notificationRouter);
+
 
 const LOGGED_IN_USERS =[
 

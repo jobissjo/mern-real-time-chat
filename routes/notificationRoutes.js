@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { clearAllNotification, notificationList, readNotificationOfUser } from "../controllers/notificationController";
+import { clearAllNotification, notificationList, readNotificationOfUser } from "../controllers/notificationController.js";
 
 const notificationRouter = Router();
 

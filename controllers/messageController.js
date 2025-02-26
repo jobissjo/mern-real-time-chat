@@ -1,20 +1,9 @@
-import Chat from "../models/chat.js";
-import Message from "../models/message.js";
+import { getAllMsgs, sendMsg } from "../services/messageService.js";
 
 
 const sendMessage = async (req, res) => {
     try{
-        const newMessage =  new Message(req.body);
-        const savedMessage = await newMessage.save();
-
-
-        const chat = await Chat.findOneAndUpdate({_id: req.body.chatId}, 
-            {
-            lastMessage: savedMessage._id,
-            $inc: {unreadMessageCount: 1}}
-        )
-        console.log(chat);
-
+        const savedMessage = await sendMsg(req.body)
         res.status(201).send({
             "message": "Message send successfully",
             "data": savedMessage
@@ -27,8 +16,8 @@ const sendMessage = async (req, res) => {
 
 const getAllMessages = async (req, res)=> {
     try {
-        const allMessages = await Message.find({chatId: req.params.chatId})
-                .sort({createdAt: 1})
+        const chatId = req.params.chatId;
+        const allMessages = await getAllMsgs(chatId);
         res.status(200).send({"message": "Messages fetched successfully", 
             data: allMessages
         })
