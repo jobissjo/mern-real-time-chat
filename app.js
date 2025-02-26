@@ -45,7 +45,7 @@ app.use('/api/user', userRouter);
 app.use('/api/chat', chatRouters);
 app.use('/api/message', messageRouters);
 app.use('/api/friend', friendRequestRouter);
-app.use('api/notification', notificationRouter);
+app.use('/api/notification', notificationRouter);
 
 
 const LOGGED_IN_USERS =[

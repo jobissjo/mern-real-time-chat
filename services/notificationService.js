@@ -6,7 +6,7 @@ export const getNotificationOfUser = async (user_id)=> {
 }
 
 export const markNotificationAsRead = async (notification_id, user_id)=> {
-    const notification = await Notification.findOneAndUpdate({_id:notification_id, recepient:user_id}, {read: true}, {new: true})
+    const notification = await Notification.findOneAndUpdate({_id:notification_id, recipient:user_id}, {read: true}, {new: true})
     return notification
 }
 

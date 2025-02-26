@@ -1,4 +1,4 @@
-import {verifyEmailService, signUpUserService} from "../services/authService.js"
+import {verifyEmailService, signUpUserService, loginUserService} from "../services/authService.js"
 
 
 const verifyEmail = async (req, res) => {
@@ -24,7 +24,7 @@ const signUpUser =  async (req, res) => {
 
 const loginUser = async (req, res) => {
     try {
-        const token = loginUserService(req.body);
+        const token = await loginUserService(req.body);
         
         return res.send({message: "User logged in successfully",
             token: token

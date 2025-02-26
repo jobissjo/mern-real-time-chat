@@ -4,7 +4,7 @@ import { getAllUsersService, getCurrentLoggedUser, updateProfilePicture } from "
 
 const getLoggedUser = async (req, res) => {
     try {
-        const user = getCurrentLoggedUser(req.body);
+        const user = await getCurrentLoggedUser(req.body);
 
         res.send({
             message: "User Detail fetched successfully",
@@ -18,10 +18,9 @@ const getLoggedUser = async (req, res) => {
 
 const getAllUsers = async (req, res) => {
     try {
-        const allUsers = getAllUsersService(req.body);
-
+        const allUsers = await getAllUsersService(req.body);
         res.send({
-            message: "User Detail fetched successfully",
+            message: "All User Detail fetched successfully",
             data: allUsers
         });
     }
