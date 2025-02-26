@@ -2,6 +2,7 @@ import redis from '../config/redisConfig.js';
 import crypto from 'crypto'
 import User from '../models/users.js';
 import bcrypt from "bcryptjs"
+import jwt from "jsonwebtoken"
 
 export const verifyEmailService = async (emailData) => {
     const {email} = emailData;
@@ -46,3 +47,13 @@ export const signUpUserService = async (userData) => {
     const newUser = new User(userData)
     await newUser.save()
 }
+
+export const loginUserService = async (userData) => {
+    const {email, password} = userData;
+    const user = User.findOne({email});
+    const isValid = await bcrypt.compare(password, user.password);
+    if (!isValid){
+        throw new Error("Invalid password")
+    }
+    return jwt.sign({userId: user._id}, process.env.SECRET_KEY);
+}   

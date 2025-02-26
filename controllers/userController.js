@@ -1,12 +1,10 @@
 
-import User from "./../models/users.js";
-
-import cloudinary from "../cloudinary.js";
+import { getAllUsersService, getCurrentLoggedUser, updateProfilePicture } from "../services/userService.js";
 
 
 const getLoggedUser = async (req, res) => {
     try {
-        const user = await User.findById(req.body.userId);
+        const user = getCurrentLoggedUser(req.body);
 
         res.send({
             message: "User Detail fetched successfully",
@@ -20,7 +18,7 @@ const getLoggedUser = async (req, res) => {
 
 const getAllUsers = async (req, res) => {
     try {
-        const allUsers = await User.find({_id: {$ne: req.body.userId}})
+        const allUsers = getAllUsersService(req.body);
 
         res.send({
             message: "User Detail fetched successfully",
@@ -34,15 +32,7 @@ const getAllUsers = async (req, res) => {
 
 const updateProfilePic = async (req, res)=> {
     try{
-        const uploadedImage = await cloudinary.uploader.upload(req.body.profilePic, {
-            folder: 'quick-chat'
-        })
-
-        await User.findByIdAndUpdate(
-            {_id: req.body.userId},
-            {profilePic: uploadedImage.secure_url},
-            {new:true}
-        )
+        await updateProfilePicture(req.body)
         res.send({message: "Profile Pic updated successfully", data: uploadedImage.secure_url})
     }
     catch(error){

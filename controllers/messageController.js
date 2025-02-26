@@ -1,19 +1,12 @@
-import {Router} from "express";
-import authMiddleware from "../middlewares/authMiddleware.js";
 import Chat from "../models/chat.js";
 import Message from "../models/message.js";
 
-const messageRouter = new Router();
 
 const sendMessage = async (req, res) => {
     try{
         const newMessage =  new Message(req.body);
         const savedMessage = await newMessage.save();
 
-        // Update the last message
-        // const currentChat = Chat.findById(req.body.chatId);
-        // currentChat.lastMessage = savedMessage._id;
-        // await currentChat.save();
 
         const chat = await Chat.findOneAndUpdate({_id: req.body.chatId}, 
             {

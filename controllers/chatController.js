@@ -1,20 +1,13 @@
-import { Router } from "express";
-import authMiddleware from "../middlewares/authMiddleware.js";
-import Chat from "./../models/chat.js";
-import Message from "../models/message.js";
+import { clearUnreadMsg, createNewChat, getAllChats } from "../services/chatService.js";
 
-const chatRouters =  Router()
 
-const createNewChat = async (req, res) => {
+
+const createNewChatController = async (req, res) => {
     try {
-        const chat = new Chat(req.body);
-        const savedChat = await chat.save()
-        let messages = savedChat.populate('members');
-        // savedChat.populate('members')
-
+        const chat = await createNewChat(req.body)
         res.status(201).send({
             message: "Chat created successfully",
-            data: messages
+            data: chat
         });
     }
     catch (error) {
@@ -22,14 +15,9 @@ const createNewChat = async (req, res) => {
     }
 }
 
-const getAllChats =  async (req, res) => {
+const getAllChatsController =  async (req, res) => {
     try {
-        const currentUser = req.body.userId;
-        const allChats = await Chat.find({members: {$in: currentUser}})
-                .populate('members')
-                .populate({path: 'lastMessage', 'match': {}})
-                .sort({updatedAt: -1});
-
+        const allChats = await getAllChats(req.body)
         res.send({
             message: "Chat details fetched successfully",
             data: allChats
@@ -41,29 +29,10 @@ const getAllChats =  async (req, res) => {
 }
 
 
-const clearUnreadMsg = async (req, res)=> { 
+const clearUnreadMsgController = async (req, res)=> { 
     try{
-        const chatId = req.body.chatId;
-
-        const chat = await Chat.findById(chatId);
-
-        if(!chat){
-            res.status(404).send({
-                message: "No Chat found with given chat ID."
-            })
-        };
-
-        const updatedChat = await Chat.findByIdAndUpdate(
-            chatId,
-            {unreadMessageCount: 0},
-            {new: true}
-        ).populate('members').populate('lastMessage');
-
-        await Message.updateMany(
-            {chatId, read: false}, 
-            {read: true}
-        );
-
+        
+        const updatedChat = await clearUnreadMsg(req.body)
         res.status(200).send({
             message: "Unread messages cleared successfully",
             data: updatedChat
@@ -77,4 +46,4 @@ const clearUnreadMsg = async (req, res)=> {
     }
 }
 
-export {clearUnreadMsg, getAllChats, createNewChat}
+export {clearUnreadMsgController, getAllChatsController, createNewChatController}
