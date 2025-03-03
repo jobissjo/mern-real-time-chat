@@ -8,6 +8,7 @@ import { Server } from 'socket.io';
 import cors from 'cors'
 import friendRequestRouter from "./routes/friendRequest.js";
 import notificationRouter from "./routes/notificationRoutes.js";
+import preferenceRouter from "./routes/preferenceRoutes.js";
 
 
 
@@ -46,6 +47,7 @@ app.use('/api/chat', chatRouters);
 app.use('/api/message', messageRouters);
 app.use('/api/friend', friendRequestRouter);
 app.use('/api/notification', notificationRouter);
+app.use('/api/preferences', preferenceRouter);
 
 
 const LOGGED_IN_USERS =[
@@ -58,7 +60,6 @@ io.on('connection', socket => {
         console.log(`User ${userId} joined room`)
     })
     socket.on('send-message', (msgData) => {
-        console.log("mesaage recived in server: " , msgData);
         
         io.to(msgData.members[0])
         .to(msgData.members[1])
@@ -71,7 +72,6 @@ io.on('connection', socket => {
     })
 
     socket.on("clear-unread-message", (message)=> {
-        console.log('clear unread message', message);
         io
         .to(message.members[0])
         .to(message.members[1])

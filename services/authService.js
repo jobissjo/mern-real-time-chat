@@ -20,7 +20,6 @@ export const verifyEmailService = async (emailData) => {
 
     const otp = `${crypto.randomInt(100000, 1000000)}`;
     await redis.set(`${email}_otp`, otp, 'EX', 6000);
-    console.log("otp", otp);
     
 
 }

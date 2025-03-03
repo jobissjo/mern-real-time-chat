@@ -19,7 +19,6 @@ export const getAllUsersService = async (data)=> {
         return {...user.toObject(), isFriend, 
             requestStatus: latestRequest ? latestRequest.status : null}
     }))
-    console.log(usersWithStatus, typeof usersWithStatus);
     
     return usersWithStatus;
 

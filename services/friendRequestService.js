@@ -1,6 +1,7 @@
 import friendRequest from "../models/friend.js";
 import { FRIEND_REQUEST_STATUS } from "../config/constants.js";
 import Notification from "../models/notification.js";
+import { getCurrentLoggedUser } from "./userService.js";
 
 export const sendFriendRequest = async (fromUser, toUser, )=> {
     if(!toUser){
@@ -23,7 +24,7 @@ export const sendFriendRequest = async (fromUser, toUser, )=> {
         throw new Error("You cannot give more than two request rejected user")
     }
     await friendRequest.create({fromUser, toUser});
-    Notification.create({"recipient": toUser, "message": "Friend request received"});
+    Notification.create({"recipient": toUser, "message": `Friend request received from ${toUser.firstName}`, "notificationType": "friendRequest"});
 }
 
 export const acceptFriendRequest = async (toUser, requestId)=> {
@@ -39,7 +40,9 @@ export const acceptFriendRequest = async (toUser, requestId)=> {
     friendReq.status = FRIEND_REQUEST_STATUS.ACCEPTED;
     await friendReq.save();
 
-    Notification.create({"recipient": updatedRequest.fromUser, "message": "Friend request accepted"});
+    const toUserInfo = await getCurrentLoggedUser({userId: toUser})
+
+    Notification.create({"recipient": updatedRequest.fromUser, "message": `Friend request accepted for ${toUserInfo.firstName}`});
 
 }
 

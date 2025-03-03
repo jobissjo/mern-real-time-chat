@@ -1,6 +1,13 @@
 import mongoose from "mongoose";
 
 const notificationSchema = new mongoose.Schema({
+    notificationType: {
+        type: String,
+        ref: "notificationTypes",
+        enum: ["friendRequest", "other"],
+        default: "other",
+        required: true
+    },
     recipient: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "users",

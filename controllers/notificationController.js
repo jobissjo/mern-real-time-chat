@@ -4,7 +4,6 @@ import { getNotificationOfUser, markNotificationAsRead, clearAllNotificationOfUs
 const notificationList = async (req, res)=> {
     try{
         const notifications = await getNotificationOfUser(req.body.userId)
-        console.log(notifications, 'notifications', req.body.userId)
         res.status(200).send({message: "Notification List fetched successfully", data: notifications})
     } catch (error) {
         res.status(500).send({ message: "Something goes wrong, try again latter" });

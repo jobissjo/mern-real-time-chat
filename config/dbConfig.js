@@ -3,7 +3,6 @@ import dotenv from "dotenv"
 dotenv.config({path: './config.env'})
 
 mongoose.connect(process.env.CONNECTION_STR)
-console.log("string", process.env.CONNECTION_STR);
 
 
 // connection state
