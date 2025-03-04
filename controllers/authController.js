@@ -1,4 +1,4 @@
-import {verifyEmailService, signUpUserService, loginUserService} from "../services/authService.js"
+import {verifyEmailService, signUpUserService, loginUserService, changePasswordService} from "../services/authService.js"
 
 
 const verifyEmail = async (req, res) => {
@@ -38,4 +38,14 @@ const loginUser = async (req, res) => {
     
 }
 
-export { verifyEmail, signUpUser, loginUser };
+const changePassword = async (req, res) => {
+    try {
+        await changePasswordService(req.body)
+        res.status(200).send({message: "Password changed successfully"})
+    }
+    catch (error) {
+        res.status(400).send({message: error.message})
+    }
+}
+
+export { verifyEmail, signUpUser, loginUser, changePassword };

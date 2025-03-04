@@ -17,6 +17,10 @@ const preferenceSchema = new mongoose.Schema({
     language: {
         type: String,
         default: "en"
+    },
+    twoFactorAuthentication: {
+        type: Boolean,
+        default: false
     }
 }, {timestamps: true})
 

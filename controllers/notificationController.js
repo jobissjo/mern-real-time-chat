@@ -1,4 +1,4 @@
-import { getNotificationOfUser, markNotificationAsRead, clearAllNotificationOfUser } from "../services/notificationService.js";
+import { getNotificationOfUser, markNotificationAsRead, clearAllNotificationOfUser, deleteAllNotificationOfUser } from "../services/notificationService.js";
 
 
 const notificationList = async (req, res)=> {
@@ -29,4 +29,14 @@ const clearAllNotification = async (req, res)=> {
     }
 }
 
-export {notificationList, readNotificationOfUser, clearAllNotification};
+const deleteAllNotifications = async (req, res)=> {
+    try{
+        await deleteAllNotificationOfUser(req.body.userId)
+        res.status(200).send({message: "All notifications deleted successfully"})
+    }
+    catch (error) {
+        res.status(500).send({ message: "Something goes wrong, try again latter" });
+    }
+}
+
+export {notificationList, readNotificationOfUser, clearAllNotification, deleteAllNotifications};

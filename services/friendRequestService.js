@@ -23,8 +23,8 @@ export const sendFriendRequest = async (fromUser, toUser, )=> {
     if (alreadyRejectedCount > 2){
         throw new Error("You cannot give more than two request rejected user")
     }
-    await friendRequest.create({fromUser, toUser});
-    Notification.create({"recipient": toUser, "message": `Friend request received from ${toUser.firstName}`, "notificationType": "friendRequest"});
+    const toUserInfo = await getCurrentLoggedUser({userId: toUser})
+    Notification.create({"recipient": toUser, "message": `Friend request received from ${toUserInfo.firstName}`, "notificationType": "friendRequest"});
 }
 
 export const acceptFriendRequest = async (toUser, requestId)=> {

@@ -1,10 +1,13 @@
 import { Router } from "express";
-import {loginUser, signUpUser, verifyEmail} from "../controllers/authController.js";
+import {changePassword, loginUser, signUpUser, verifyEmail} from "../controllers/authController.js";
+import authMiddleware from "../middlewares/authMiddleware.js";
 
 const router = Router();
 
-router.post('/verify-email', verifyEmail)
-router.post('/signup', signUpUser)
-router.post('/login', loginUser)
+router.post('/verify-email', verifyEmail);
+router.post('/signup', signUpUser);
+router.post('/login', loginUser);
+router.post('/change-password', authMiddleware, changePassword);
+
 
 export default router;
