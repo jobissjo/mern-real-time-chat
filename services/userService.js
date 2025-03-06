@@ -1,4 +1,5 @@
 import cloudinary from "../cloudinary.js";
+import logger from "../config/loggerConfig.js";
 import User from "./../models/users.js";
 
 export const getAllUsersService = async (data)=> {
@@ -25,7 +26,7 @@ export const getAllUsersService = async (data)=> {
 }
 
 export const getCurrentLoggedUser = async (data)=> {
-    return await User.findById(data.userId);
+    return await User.findById(data.userId).populate('friends');
 }
 
 export const updateProfilePicture = async (data) => {
@@ -38,4 +39,11 @@ export const updateProfilePicture = async (data) => {
         { profilePic: uploadedImage.secure_url },
         { new: true }
     )
+}
+
+export const getFriendsListService = async (userId)=> {
+    logger.info("User:"+ userId+ " access his friends list")
+    const currentUser = await User.findOne({toUser:userId}).populate("friends");
+    return currentUser?.friends ?? [];
+
 }

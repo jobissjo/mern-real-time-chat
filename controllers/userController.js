@@ -1,5 +1,5 @@
 
-import { getAllUsersService, getCurrentLoggedUser, updateProfilePicture } from "../services/userService.js";
+import { getAllUsersService, getCurrentLoggedUser, updateProfilePicture, getFriendsListService } from "../services/userService.js";
 
 
 const getLoggedUser = async (req, res) => {
@@ -39,4 +39,17 @@ const updateProfilePic = async (req, res)=> {
     }
 }
 
-export {updateProfilePic, getAllUsers, getLoggedUser};
+const getFriendsList = async (req, res)=> {
+    try{
+        const friends = await getFriendsListService(req.body.userId)
+        res.send({
+            message: "Friends fetched successfully",
+            data: friends
+        });
+    }
+    catch (error) {
+        res.status(400).send({ message: error.message });
+    }
+}
+
+export {updateProfilePic, getAllUsers, getLoggedUser, getFriendsList};
