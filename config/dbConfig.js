@@ -1,5 +1,6 @@
 import mongoose from 'mongoose'
 import dotenv from "dotenv"
+import logger from './loggerConfig.js';
 dotenv.config({path: './config.env'})
 
 mongoose.connect(process.env.CONNECTION_STR)
@@ -9,11 +10,15 @@ mongoose.connect(process.env.CONNECTION_STR)
 const db = mongoose.connection;
 
 db.on('connected', ()=> {
-    console.log("Connection established");
+    logger.info("Mongodb connection established");
 });
 
 db.on('error', (err)=> {
-    console.log("Error connecting to MongoDB: ", err);
+    logger.error("Error connecting to MongoDB: ", err);
 });
+
+db.on('disconnect', ()=>{
+    logger.info("Mongodb connection disconnected");
+})
 
 export default db;

@@ -8,6 +8,6 @@ router.post('/verify-email', verifyEmail);
 router.post('/signup', signUpUser);
 router.post('/login', loginUser);
 router.post('/change-password', authMiddleware, changePassword);
-
+// router.post('/forgot-password', )
 
 export default router;

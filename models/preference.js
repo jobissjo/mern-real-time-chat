@@ -21,6 +21,15 @@ const preferenceSchema = new mongoose.Schema({
     twoFactorAuthentication: {
         type: Boolean,
         default: false
+    },
+    blockedUsers: {
+        type: [
+            {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "users",
+                required: false
+            }
+        ]
     }
 }, {timestamps: true})
 

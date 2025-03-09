@@ -1,4 +1,5 @@
 import Redis from "ioredis";
+import logger from "./loggerConfig.js";
 
 // Connect to Redis
 const redis = new Redis({
@@ -6,7 +7,7 @@ const redis = new Redis({
     port: process.env.REDIS_PORT || 6379,
 })
 
-redis.on("connect", ()=> console.log("Connected to Redis"));
-redis.on("error", (err)=> console.error('Redis error', err));
+redis.on("connect", ()=> logger.info("Connected to Redis"));
+redis.on("error", (err)=> logger.error('Redis connected error'));
 
 export default redis;

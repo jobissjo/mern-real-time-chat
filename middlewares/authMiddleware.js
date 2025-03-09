@@ -14,8 +14,6 @@ export default (req, res, next) => {
         const decodedToken = jwt.decode(token, process.env.SECRET_KEY);
         req.body.userId = decodedToken.userId;
         next();
-        
-        
     }
     catch (err) {
         res.status(401).send({

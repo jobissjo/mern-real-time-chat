@@ -1,6 +1,7 @@
 import cloudinary from "../cloudinary.js";
 import logger from "../config/loggerConfig.js";
 import User from "./../models/users.js";
+import { getAllChats } from "./chatService.js";
 
 export const getAllUsersService = async (data)=> {
     const currentUser = await User.findById(data.userId).populate("friends");
@@ -43,7 +44,22 @@ export const updateProfilePicture = async (data) => {
 
 export const getFriendsListService = async (userId)=> {
     logger.info("User:"+ userId+ " access his friends list")
-    const currentUser = await User.findOne({toUser:userId}).populate("friends");
+    const currentUser = await User.findOne({_id:userId}).populate("friends");
     return currentUser?.friends ?? [];
 
+}
+
+export const getNotChattedFriendsListService = async (userId)=> {
+    logger.info("User:"+ userId+ " access his not chatted friends list")
+    const currentUser = await User.findById(userId).populate("friends");
+    const chattedFriendsList = await getAllChats({userId})
+    const chattedFriendsIds = new Set(
+        chattedFriendsList.flatMap(chat => chat.members.map(mem => mem._id.toString()))
+    );
+
+    const notChattedFriends = currentUser.friends.filter(friend => 
+        !chattedFriendsIds.has(friend._id.toString())
+    );
+    return notChattedFriends;
+ 
 }
