@@ -1,3 +1,4 @@
+import logger from "../config/loggerConfig.js";
 import { getAllMsgs, sendMsg } from "../services/messageService.js";
 
 
@@ -10,6 +11,7 @@ const sendMessage = async (req, res) => {
         })
 
     }catch (err) {
+        logger.info(err)
         res.status(400).send({message: err.message});
     }
 }

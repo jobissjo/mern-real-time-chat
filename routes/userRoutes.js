@@ -1,14 +1,13 @@
 import {Router} from "express";
-import authMiddleware from "../middlewares/authMiddleware.js";
 import { getAllUsers, getLoggedUser, updateProfilePic, getFriendsList, notChattedFriends } from "../controllers/userController.js";
 
 const userRouter = Router();
 
 
-userRouter.get('/get-logged-user', authMiddleware, getLoggedUser);
-userRouter.get('/get-all-users', authMiddleware, getAllUsers);
-userRouter.put('/update-profile-pic', authMiddleware, updateProfilePic );
-userRouter.get('/get-friends-list', authMiddleware, getFriendsList);
-userRouter.get('/not-chatted-friends', authMiddleware, notChattedFriends)
+userRouter.get('/get-logged-user',  getLoggedUser);
+userRouter.get('/get-all-users',  getAllUsers);
+userRouter.put('/update-profile-pic',  updateProfilePic );
+userRouter.get('/get-friends-list',  getFriendsList);
+userRouter.get('/not-chatted-friends',  notChattedFriends)
 
 export default userRouter;

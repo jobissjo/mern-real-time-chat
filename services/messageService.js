@@ -6,7 +6,7 @@ export const sendMsg = async (msgData) => {
     const newMessage = new Message(msgData);
     const savedMessage = await newMessage.save();
 
-    await Chat.findOneAndUpdate({ _id: req.body.chatId },
+    await Chat.findOneAndUpdate({ _id: msgData.chatId },
         {
             lastMessage: savedMessage._id,
             $inc: { unreadMessageCount: 1 }

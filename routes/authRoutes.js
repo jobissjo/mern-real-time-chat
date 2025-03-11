@@ -1,13 +1,15 @@
 import { Router } from "express";
-import {changePassword, loginUser, signUpUser, verifyEmail} from "../controllers/authController.js";
+import {changePassword, forgotPassword, loginUser, resetPassword, signUpUser, verifyEmail} from "../controllers/authController.js";
 import authMiddleware from "../middlewares/authMiddleware.js";
+import { anonymousRateLimiter } from "../middlewares/rateLimiter.js";
 
 const router = Router();
 
-router.post('/verify-email', verifyEmail);
-router.post('/signup', signUpUser);
-router.post('/login', loginUser);
-router.post('/change-password', authMiddleware, changePassword);
-// router.post('/forgot-password', )
+router.post('/verify-email', anonymousRateLimiter, verifyEmail);
+router.post('/signup', anonymousRateLimiter, signUpUser);
+router.post('/login', anonymousRateLimiter, loginUser);
+router.post('/change-password', authMiddleware, anonymousRateLimiter, changePassword);
+router.post('/forgot-password', forgotPassword, anonymousRateLimiter)
+router.post('/reset-password', resetPassword, anonymousRateLimiter);
 
 export default router;

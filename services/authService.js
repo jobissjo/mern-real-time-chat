@@ -78,3 +78,44 @@ export const changePasswordService = async (userData) => {
     user.password = hashedPassword;
     await user.save();
 }
+
+
+export const forgotPasswordService = async (userData) => {
+    const {email} = userData;
+    const user = await User.findOne({email});
+    if (!user){
+        throw new Error("User not found")
+    }
+    const otp = `${crypto.randomInt(100000, 1000000)}`;
+    await redis.set(`${email}_forgot_password_otp`, otp, 'EX', 6000);
+    let message = `Your OTP for forgot password is: <b>${otp}</b> <br>This OTP is valid for <strong>10 minutes</strong>. Do not share it with anyone`;
+    await sendTemplateMail(email, "OTP for forgot password", "email_otp_template", {message, name: user.firstName, companyName: "Quick Chat"})
+}
+
+export const resetPasswordService = async (userData) => {
+    const {email, otp, newPassword} = userData;
+    const user = await User.findOne({email});
+    const otp_value = await redis.get(`${email}_forgot_password_otp`);
+    if (!otp_value){
+        throw new Error("OTP expired")
+    }
+    if (otp_value!== otp){
+        throw new Error("Invalid OTP")
+    }
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+    user.password = hashedPassword;
+    await user.save();
+}
+
+
+export const verifyOtpService = async (userData) => {
+    const {email, otp} = userData;
+    const otp_value = await redis.get(`${email}_otp`);
+    if (!otp_value){
+        throw new Error("OTP expired")
+    }
+    if (otp_value!== otp){
+        throw new Error("Invalid OTP")
+    }
+    await redis.del(`${email}_otp`);
+}

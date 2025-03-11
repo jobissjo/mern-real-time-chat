@@ -1,4 +1,4 @@
-import {verifyEmailService, signUpUserService, loginUserService, changePasswordService} from "../services/authService.js"
+import {verifyEmailService, signUpUserService, loginUserService, changePasswordService, forgotPasswordService, resetPasswordService, verifyOtpService} from "../services/authService.js"
 
 
 const verifyEmail = async (req, res) => {
@@ -48,4 +48,18 @@ const changePassword = async (req, res) => {
     }
 }
 
-export { verifyEmail, signUpUser, loginUser, changePassword };
+const forgotPassword = async (req, res) => {
+    await forgotPasswordService(req.body);
+    res.status(200).send({message: "Otp send to your email address successfully"})
+}
+
+const resetPassword = async (req, res) => {
+    await resetPasswordService(req.body);
+    res.status(200).send({message: "Password reset successfully"})
+}
+
+const verifyOtp = async (req, res) => {
+    await verifyOtpService(req.body);
+    res.status(200).send({message: "Otp verified successfully"})
+}
+export { verifyEmail, signUpUser, loginUser, changePassword, forgotPassword, resetPassword };
