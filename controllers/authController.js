@@ -62,4 +62,4 @@ const verifyOtp = async (req, res) => {
     await verifyOtpService(req.body);
     res.status(200).send({message: "Otp verified successfully"})
 }
-export { verifyEmail, signUpUser, loginUser, changePassword, forgotPassword, resetPassword };
+export { verifyEmail, signUpUser, loginUser, changePassword, forgotPassword, resetPassword, verifyOtp };
