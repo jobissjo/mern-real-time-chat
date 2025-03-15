@@ -17,6 +17,18 @@ const chatSchema = new mongoose.Schema({
     unreadMessageCount: {
         type: Number,
         default: 0
+    },
+    clearedChatAt: {
+        type: Date,
+        default: null
+    },
+    encryptedKey: {
+        type: String,
+        default: null
+    },
+    blocked: {
+        type: Boolean,
+        default: false
     }
 }, {timestamps: true});
 

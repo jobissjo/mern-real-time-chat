@@ -1,9 +1,9 @@
 import mongoose from 'mongoose'
-import dotenv from "dotenv"
 import logger from './loggerConfig.js';
-dotenv.config({path: './config.env'})
+import { MONGO_CONNECTION_STRING } from './constants.js';
 
-mongoose.connect(process.env.CONNECTION_STR)
+
+mongoose.connect(MONGO_CONNECTION_STRING)
 
 
 // connection state

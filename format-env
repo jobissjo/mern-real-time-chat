@@ -1,0 +1,17 @@
+CONNECTION_STR='your-mongodb-connection-string'
+SECRET_KEY='you-secret-key'
+PORT=5000
+
+REDIS_HOST=127.0.0.1
+REDIS_PORT=6479
+
+EMAIL_HOST_NAME='smtp.gmail.com'
+EMAIL_HOST_PORT=587
+EMAIL_HOST_USERNAME='sbc@example.com'
+EMAIL_HOST_PASSWORD='your-password'
+
+CLOUDINARY_API_SECRET='your-cloudinary-secret'
+CLOUDINARY_API_KEY='your-cloudinary-key'
+CLOUDINARY_CLOUD_NAME='your-cloudinary-cloud-name'
+
+ALLOWED_ORIGINS=http://localhost:5173,http://192.168.1.40:5173

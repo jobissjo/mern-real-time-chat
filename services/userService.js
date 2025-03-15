@@ -61,5 +61,5 @@ export const getNotChattedFriendsListService = async (userId)=> {
         !chattedFriendsIds.has(friend._id.toString())
     );
     return notChattedFriends;
- 
 }
+

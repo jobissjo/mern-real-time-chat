@@ -1,13 +1,11 @@
-import dotenv from "dotenv"
-dotenv.config({path: './config.env'})
-
-import dbconfig from './config/dbConfig.js';
+import _dbconfig from './config/dbConfig.js';
 import server from './app.js';
 import logger from "./config/loggerConfig.js";
+import { HOST, PORT } from "./config/constants.js";
 
 
 
-const port = process.env.PORT || 3000;
-server.listen(port, ()=> {
-    logger.info(`listening on port: ${port}`);
+
+server.listen(PORT,HOST, ()=> {
+    logger.info(`listening on port: ${PORT}`);
 })

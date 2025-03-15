@@ -29,3 +29,5 @@ coverage/
 
 # Ignore yarn lock file if not using Yarn
 yarn.lock
+private.pem
+public.pem

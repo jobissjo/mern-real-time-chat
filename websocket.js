@@ -1,6 +1,7 @@
 import { Server } from "socket.io";
 import redis from "./config/redisConfig.js";
 import logger from "./config/loggerConfig.js";
+import { allowedOrigins } from "./config/constants.js";
 
 const ONLINE_USERS_KEY = "online_users";
 const SOCKET_USER_MAP_KEY = "socket_user_map";
@@ -8,7 +9,7 @@ const SOCKET_USER_MAP_KEY = "socket_user_map";
 export const setupWebSocket = (server) => {
     const io = new Server(server, {
         cors: {
-            origin: "http://localhost:5173",
+            origin: allowedOrigins,
             methods: ["GET", "POST", "PUT", "DELETE"],
             credentials: true,
         }

@@ -1,8 +1,11 @@
 import Message from "../models/message.js";
+import { CustomError } from "../utils/helper.js";
+import { decryptKey, generateChatEncryptedKey } from "../utils/security.js";
 import Chat from "./../models/chat.js";
 
 export const createNewChat = async (data) => {
-    const chat = new Chat(data);
+    const encryptedKey = await generateChatEncryptedKey()
+    const chat = new Chat({...data, encryptedKey});
     const savedChat = await chat.save()
     let messages = savedChat.populate('members');
     return messages
@@ -14,8 +17,13 @@ export const getAllChats = async (data) => {
         .populate('members')
         .populate({ path: 'lastMessage', 'match': {} })
         .sort({ updatedAt: -1 });
-
-    return allChats;
+    const decryptedChats =  await Promise.all( allChats.map( async (chat) => {
+        return {
+            ...chat.toObject(),
+            encryptedKey: await decryptKey(chat.encryptedKey)
+        }
+    }))
+    return decryptedChats;
 }
 
 export const clearUnreadMsg = async (data) => {
@@ -42,4 +50,31 @@ export const clearUnreadMsg = async (data) => {
 
     return updatedChat;
 
+}
+
+export const clearChatMsg = async ({chatId, userId}) => {
+    const chat = await Chat.findById(chatId);
+    if (!chat?.members.map(mem => mem._id).includes(userId)){
+        throw new CustomError("You do not have permission to clear message in this chat", 403)
+    }
+    await chat.updateOne({
+        $set : {
+            lastMessage: null,
+            unreadMessageCount: 0,
+            clearedChatAt: new Date()
+        }
+    })
+}
+
+
+export const blockChat = async ({chatId, userId}) => {
+    const chat = await Chat.findById(chatId);
+    if (!chat?.members.map(mem => mem._id).includes(userId)){
+        throw new CustomError("You do not have permission to block this chat", 403)
+    }
+    await chat.updateOne({
+        $set : {
+            blocked: true
+        }
+    })
 }

@@ -1,4 +1,4 @@
-import { clearUnreadMsg, createNewChat, getAllChats } from "../services/chatService.js";
+import { blockChat, clearChatMsg, clearUnreadMsg, createNewChat, getAllChats } from "../services/chatService.js";
 
 
 
@@ -15,7 +15,7 @@ const createNewChatController = async (req, res) => {
     }
 }
 
-const getAllChatsController =  async (req, res) => {
+const getAllChatsController = async (req, res) => {
     try {
         const allChats = await getAllChats(req.body)
         res.send({
@@ -29,16 +29,16 @@ const getAllChatsController =  async (req, res) => {
 }
 
 
-const clearUnreadMsgController = async (req, res)=> { 
-    try{
-        
+const clearUnreadMsgController = async (req, res) => {
+    try {
+
         const updatedChat = await clearUnreadMsg(req.body)
         res.status(200).send({
             message: "Unread messages cleared successfully",
             data: updatedChat
         })
 
-    }catch (error) {
+    } catch (error) {
         res.status(400).send({
             message: error.message,
 
@@ -46,4 +46,21 @@ const clearUnreadMsgController = async (req, res)=> {
     }
 }
 
-export {clearUnreadMsgController, getAllChatsController, createNewChatController}
+const clearChatMsgController = async (req, res) => {
+    const updatedChat = await clearChatMsg(req.body)
+    res.status(200).send({
+        message: "Chat messages cleared successfully",
+        data: updatedChat
+    });
+
+}
+
+const blockChatMsgController = async (req, res) => {
+    await blockChat(req.body);
+    res.status(200).send({
+        message: "Chat messages blocked successfully",
+        data: null
+    });
+}
+
+export { clearUnreadMsgController, getAllChatsController, createNewChatController, clearChatMsgController, blockChatMsgController }

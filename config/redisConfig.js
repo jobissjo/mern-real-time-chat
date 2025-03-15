@@ -1,13 +1,15 @@
 import Redis from "ioredis";
 import logger from "./loggerConfig.js";
+import { REDIS_HOST, REDIS_PORT } from "./constants.js";
 
-// Connect to Redis
+
+
 const redis = new Redis({
-    host: process.env.REDIS_HOST || '127.0.0.1',
-    port: process.env.REDIS_PORT || 6379,
+    host:  REDIS_HOST,
+    port: REDIS_PORT,
 })
 
-redis.on("connect", ()=> logger.info("Connected to Redis"));
-redis.on("error", (err)=> logger.error('Redis connected error'));
+redis.on("connect", ()=> logger.info("Connected to Redis: "));
+redis.on("error", (err)=> logger.error('Redis connected error: '));
 
 export default redis;

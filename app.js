@@ -12,22 +12,28 @@ import requestLogger  from "./middlewares/requestLogger.js";
 import { setupWebSocket } from "./websocket.js";
 import authMiddleware from "./middlewares/authMiddleware.js";
 import { UserRateLimiter } from "./middlewares/rateLimiter.js";
+import errorHandler from "./middlewares/errorHandler.js";
+import { CustomError } from "./utils/helper.js";
+import { allowedOrigins } from "./config/constants.js";
 
 
 const app = express();
 
 app.use(
     cors({
-        origin: "http://localhost:5173",
+        origin: (origin, callback)=> {
+            if(allowedOrigins.includes(origin)){
+                callback(null, true)
+            } else {
+                callback(new Error("Not allowed by CORS"))
+            }
+        },
         methods: ["GET", "POST", "PUT", "DELETE"],
         credentials: true, 
     })
     
 )
-app.use((err, req, res, next) => {
-    console.error(err.stack); // Log the error stack trace
-    res.status(500).json({ message: 'Something went wrong!' });
-});
+
 
 
 app.use(express.json());
@@ -46,6 +52,11 @@ app.use('/api/notification', authMiddleware, UserRateLimiter, notificationRouter
 app.use('/api/preferences', authMiddleware, UserRateLimiter, preferenceRouter);
 
 
+app.get('/', ()=> {
+    throw new CustomError("Custom error message", 400)
 
+})
+
+app.use(errorHandler);
 
 export default server
