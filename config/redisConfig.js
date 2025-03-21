@@ -9,7 +9,7 @@ const redis = new Redis({
     port: REDIS_PORT,
 })
 
-redis.on("connect", ()=> logger.info("Connected to Redis: "));
-redis.on("error", (err)=> logger.error('Redis connected error: '));
+redis.on("connect", ()=> logger.info("Connected to Redis"));
+redis.on("error", (err)=> logger.error('Redis connected error'));
 
 export default redis;

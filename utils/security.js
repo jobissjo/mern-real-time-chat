@@ -27,7 +27,9 @@ export const encryptChatKey = async (chatKey) => {
 export const decryptKey = async (encryptedKey) => {
     const [privateKey, _] = await loadKeys();
     if (!privateKey) throw new CustomError("Private key not loaded", 400);
-    return crypto.privateDecrypt(privateKey, Buffer.from(encryptedKey, 'base64')).toString('hex');
+    const decryptedHex = crypto.privateDecrypt(privateKey, Buffer.from(encryptedKey, 'base64')).toString('hex');
+    const decryptedBase64 = Buffer.from(decryptedHex, 'hex').toString('base64');
+    return decryptedBase64;
 };
 
 export const generateChatEncryptedKey = async () => {

@@ -78,3 +78,13 @@ export const blockChat = async ({chatId, userId}) => {
         }
     })
 }
+
+export const getChatByIdService = async ({chatId, userId}) => {
+    console.log(chatId, userId);
+    
+    const chat = await Chat.findById(chatId);
+    if (!chat?.members.map(mem => mem._id).includes(userId)){
+        throw new CustomError("You do not have permission to view this chat", 403)
+    }
+    return chat;
+}

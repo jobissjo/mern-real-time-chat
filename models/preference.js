@@ -30,6 +30,10 @@ const preferenceSchema = new mongoose.Schema({
                 required: false
             }
         ]
+    },
+    isLastSeenShow: {
+        type: Boolean,
+        default: true
     }
 }, {timestamps: true})
 

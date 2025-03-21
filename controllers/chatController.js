@@ -1,4 +1,4 @@
-import { blockChat, clearChatMsg, clearUnreadMsg, createNewChat, getAllChats } from "../services/chatService.js";
+import { blockChat, clearChatMsg, clearUnreadMsg, createNewChat, getAllChats, getChatByIdService } from "../services/chatService.js";
 
 
 
@@ -63,4 +63,13 @@ const blockChatMsgController = async (req, res) => {
     });
 }
 
-export { clearUnreadMsgController, getAllChatsController, createNewChatController, clearChatMsgController, blockChatMsgController }
+const getChatById = async (req, res) => {
+    const chat = await getChatByIdService({chatId: req.params.chatId, userId: req.body.userId});
+    res.send({
+        message: "Chat fetched successfully",
+        data: chat
+    });
+    
+}
+
+export { clearUnreadMsgController, getAllChatsController, createNewChatController, clearChatMsgController, blockChatMsgController, getChatById }

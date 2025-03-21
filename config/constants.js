@@ -20,9 +20,10 @@ export const MONGO_CONNECTION_STRING = process.env.CONNECTION_STR;
 
 export const allowedOrigins = process.env.ALLOWED_ORIGINS ? process.env.ALLOWED_ORIGINS.split(',') : [];
 
+
 export const CLOUDINARY_API_SECRET = process.env.CLOUDINARY_API_SECRET;
 export const CLOUDINARY_CLOUD_NAME = process.env.CLOUDINARY_CLOUD_NAME;
 export const CLOUDINARY_API_KEY = process.env.CLOUDINARY_API_KEY;
 
 export const PORT = process.env.PORT || 5000;
-export const HOST = process.env.HOST || 'localhost';
+export const HOST = process.env.HOST || '0.0.0.0';
