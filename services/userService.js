@@ -63,3 +63,21 @@ export const getNotChattedFriendsListService = async (userId)=> {
     return notChattedFriends;
 }
 
+export const searchGlobalUsers = async (searchKey, userId)=> {
+    logger.info("User:"+ userId+ " searched for global users")
+    let users = await User.find({
+        $or: [
+            { name: { $regex: searchKey, $options: 'i' } },
+            { email: { $regex: searchKey, $options: 'i' } }
+        ]
+    }).lean();
+    // Remove the current user from the list
+    users = users.filter(user => user._id.toString() !== userId);
+
+    // Add a IsFriend
+    users = users.map(user => ({
+        ...user,
+        isFriend: user.friends.some(friendId => friendId.toString() === userId)
+    }));
+    return users;
+}

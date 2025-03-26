@@ -42,7 +42,7 @@ const server = createServer(app);
 
 setupWebSocket(server)
 // Routes
-
+app.set('trust proxy', 1); 
 app.use('/api/auth', authRouter);
 app.use('/api/user', authMiddleware, UserRateLimiter, userRouter);
 app.use('/api/chat', authMiddleware, UserRateLimiter, chatRouters);

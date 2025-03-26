@@ -1,5 +1,5 @@
 
-import { getAllUsersService, getCurrentLoggedUser, updateProfilePicture, getFriendsListService, getNotChattedFriendsListService } from "../services/userService.js";
+import { getAllUsersService, getCurrentLoggedUser, updateProfilePicture, getFriendsListService, getNotChattedFriendsListService, searchGlobalUsers } from "../services/userService.js";
 
 
 const getLoggedUser = async (req, res) => {
@@ -65,4 +65,16 @@ const notChattedFriends = async (req, res)=> {
     }
 }
 
-export {updateProfilePic, getAllUsers, getLoggedUser, getFriendsList, notChattedFriends};
+const searchUsersGlobally = async (req, res) => {
+    try {
+        const users = await searchGlobalUsers(req.body.searchKey, req.body.userId);
+        res.send({
+            message: "Users searched successfully",
+            data: users
+        });
+    }
+    catch (error) {
+        res.status(400).send({message: error.message});
+    }
+}
+export {updateProfilePic, getAllUsers, getLoggedUser, getFriendsList, notChattedFriends, searchUsersGlobally};
