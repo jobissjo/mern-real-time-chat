@@ -30,6 +30,7 @@ export const sendFriendRequest = async (fromUser, toUser, )=> {
 }
 
 export const acceptFriendRequest = async (toUser, requestId)=> {
+    debugger
     const friendReq = await friendRequest.findOne(
         {toUser, _id:requestId}, 
     );

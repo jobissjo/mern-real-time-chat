@@ -67,7 +67,7 @@ const notChattedFriends = async (req, res)=> {
 
 const searchUsersGlobally = async (req, res) => {
     try {
-        const users = await searchGlobalUsers(req.body.searchKey, req.body.userId);
+        const users = await searchGlobalUsers(req.query.searchKey, req.body.userId);
         res.send({
             message: "Users searched successfully",
             data: users

@@ -18,7 +18,7 @@ const acceptFriendRequestController = async (req, res) => {
         acceptFriendRequest(req.body.userId, req.body.requestId)
         res.send({
             message: "Friend request accepted successfully",
-            data: request
+            data: null
         });
         
     } catch (error) {
