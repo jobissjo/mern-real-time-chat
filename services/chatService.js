@@ -4,7 +4,15 @@ import { decryptKey, generateChatEncryptedKey } from "../utils/security.js";
 import Chat from "./../models/chat.js";
 
 export const createNewChat = async (data) => {
+
+    // Check if already started a chat
+    const existChat = await Chat.findOne({ members: { $all: data.members } });
+    if (existChat) {
+        throw new CustomError("Chat already started with these members");
+    }
     const encryptedKey = await generateChatEncryptedKey()
+    console.log(data, 'data');
+    
     const chat = new Chat({...data, encryptedKey});
     const savedChat = await chat.save()
     let messages = savedChat.populate('members');

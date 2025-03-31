@@ -32,7 +32,7 @@ const getAllUsers = async (req, res) => {
 const updateProfilePic = async (req, res)=> {
     try{
         await updateProfilePicture(req.body)
-        res.send({message: "Profile Pic updated successfully", data: uploadedImage.secure_url})
+        res.send({message: "Profile Pic updated successfully", data: null})
     }
     catch(error){
         res.status(400).send({message: error.message})

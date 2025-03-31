@@ -18,10 +18,6 @@ const chatSchema = new mongoose.Schema({
         type: Number,
         default: 0
     },
-    clearedChatAt: {
-        type: Date,
-        default: null
-    },
     encryptedKey: {
         type: String,
         default: null
