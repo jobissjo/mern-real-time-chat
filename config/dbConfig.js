@@ -3,7 +3,7 @@ import logger from './loggerConfig.js';
 import { MONGO_CONNECTION_STRING } from './constants.js';
 
 
-mongoose.connect(MONGO_CONNECTION_STRING)
+mongoose.connect(MONGO_CONNECTION_STRING, {tls:true})
 
 
 // connection state
