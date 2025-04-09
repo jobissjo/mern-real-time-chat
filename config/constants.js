@@ -15,9 +15,11 @@ export const EMAIL_HOST_PASSWORD = process.env.EMAIL_HOST_PASSWORD;
 
 export const REDIS_HOST = process.env.REDIS_HOST || '127.0.0.1';
 export const REDIS_PORT = process.env.REDIS_PORT || 6379;
-export const REDIS_PASSWORD = process.env.REDIS_PASSWORD || ''
+export const REDIS_PASSWORD = process.env.REDIS_PASSWORD || false
+export const REDIS_TLS = process.env.REDIS_TLS || 'false'
 
 export const MONGO_CONNECTION_STRING = process.env.CONNECTION_STR;
+export const MONGO_TLS = process.env.MONGO_TLS || false
 
 export const allowedOrigins = process.env.ALLOWED_ORIGINS ? process.env.ALLOWED_ORIGINS.split(',') : [];
 

@@ -1,9 +1,15 @@
 import mongoose from 'mongoose'
 import logger from './loggerConfig.js';
-import { MONGO_CONNECTION_STRING } from './constants.js';
+import { MONGO_CONNECTION_STRING, MONGO_TLS } from './constants.js';
 
+const options = {
+    
+}
+if (MONGO_TLS){
+    options.tls=true
+}
 
-mongoose.connect(MONGO_CONNECTION_STRING, {tls:true})
+mongoose.connect(MONGO_CONNECTION_STRING, options)
 
 
 // connection state
