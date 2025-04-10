@@ -104,10 +104,13 @@ export const searchGlobalUsers = async (searchKey, userId) => {
             fr.status === FRIEND_REQUEST_STATUS.PENDING
         );
         
-        if (receivedRequest) {
+        if (receivedRequest || sentRequest) {
             const request = friendRequests.find(fr =>
-                fr.fromUser.toString() === user._id.toString() &&
-                fr.toUser.toString() === userId
+            (fr.fromUser.toString() === user._id.toString() &&
+            fr.toUser.toString() === userId &&
+            fr.status === FRIEND_REQUEST_STATUS.PENDING) ||
+            fr.fromUser.toString() === userId &&
+            fr.toUser.toString() === user._id.toString() && fr.status === FRIEND_REQUEST_STATUS.PENDING
             );
             requestId = request?._id;
         }

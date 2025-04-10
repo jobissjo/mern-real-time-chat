@@ -15,7 +15,7 @@ const sendFriendRequestController = async (req, res) => {
 
 const acceptFriendRequestController = async (req, res) => {
     try {
-        acceptFriendRequest(req.body.userId, req.body.requestId)
+        await acceptFriendRequest(req.body.userId, req.body.requestId);
         res.send({
             message: "Friend request accepted successfully",
             data: null
@@ -28,7 +28,7 @@ const acceptFriendRequestController = async (req, res) => {
 
 const rejectFriendRequestController = async (req, res) => {
     try {
-        rejectFriendRequest(req.body.userId, req.body.requestId)
+        await rejectFriendRequest(req.body.userId, req.body.requestId)
         res.send({
             message: "Friend request rejected successfully",
             data: request
@@ -39,12 +39,12 @@ const rejectFriendRequestController = async (req, res) => {
     }
 }
 
-const cancelFriendRequestController = (req, res) => {
+const cancelFriendRequestController = async (req, res) => {
     try{
-        cancelFriendRequest(req.body.userId, req.body.requestId)
+        await cancelFriendRequest(req.body.userId, req.body.requestId);
         res.send({
             message: "Friend request canceled successfully",
-            data: request
+            data: null
         });
     }
     catch (error) {

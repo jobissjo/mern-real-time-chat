@@ -30,7 +30,7 @@ export const sendFriendRequest = async (fromUser, toUser, )=> {
 }
 
 export const acceptFriendRequest = async (toUser, requestId)=> {
-    debugger
+    
     const friendReq = await friendRequest.findOne(
         {toUser, _id:requestId}, 
     );
@@ -89,6 +89,7 @@ export const getFriendRequests = async (toUser)=> {
 }
 
 export const cancelFriendRequest = async (fromUser, requestId)=> {
+    logger.info("Canceling friend request..."+ fromUser);
     const friendReq = await friendRequest.findOne(
         {fromUser, _id: requestId}, 
     );
