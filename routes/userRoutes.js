@@ -1,9 +1,9 @@
 import {Router} from "express";
-import { getAllUsers, getLoggedUser, updateProfilePic, getFriendsList, notChattedFriends, searchUsersGlobally } from "../controllers/userController.js";
+import { getAllUsers, getLoggedUser, updateProfilePic, getFriendsList, notChattedFriends, searchUsersGlobally, updateUserController } from "../controllers/userController.js";
 
 const userRouter = Router();
 
-
+userRouter.put('', updateUserController);
 userRouter.get('/get-logged-user',  getLoggedUser);
 userRouter.get('/get-all-users',  getAllUsers);
 userRouter.put('/update-profile-pic',  updateProfilePic );

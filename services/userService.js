@@ -128,3 +128,16 @@ export const searchGlobalUsers = async (searchKey, userId) => {
 
     return users;
 };
+
+
+export const updateUserService = async (userId, userData)=> {
+    const updatedUser = await User.findByIdAndUpdate(userId,
+        {$set: userData},
+        {new: true, runValidators: true}
+    )
+    if (!updatedUser) {
+        throw new Error("User not found")
+    }
+    return updatedUser;
+
+}

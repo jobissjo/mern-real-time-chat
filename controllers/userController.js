@@ -1,5 +1,6 @@
 
-import { getAllUsersService, getCurrentLoggedUser, updateProfilePicture, getFriendsListService, getNotChattedFriendsListService, searchGlobalUsers } from "../services/userService.js";
+import { getAllUsersService, getCurrentLoggedUser, updateProfilePicture, getFriendsListService, getNotChattedFriendsListService, searchGlobalUsers, updateUserService } from "../services/userService.js";
+import { CustomError } from "../utils/helper.js";
 
 
 const getLoggedUser = async (req, res) => {
@@ -77,4 +78,19 @@ const searchUsersGlobally = async (req, res) => {
         res.status(400).send({message: error.message});
     }
 }
-export {updateProfilePic, getAllUsers, getLoggedUser, getFriendsList, notChattedFriends, searchUsersGlobally};
+
+const updateUserController = async (req, res) => {
+    try {
+        const user = await updateUserService(req.body.userId, req.body);
+        res.send({
+            message: "User updated successfully",
+            data: user
+        });
+    }
+    catch (error) {
+        throw new CustomError(error.message, 500)
+    }
+}
+
+
+export {updateProfilePic, getAllUsers, getLoggedUser, getFriendsList, notChattedFriends, searchUsersGlobally, updateUserController};

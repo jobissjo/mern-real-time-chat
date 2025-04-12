@@ -31,6 +31,26 @@ const userSchema = new mongoose.Schema({
                 required: false
             }
         ]
+    },
+    bio: {
+        type: String,
+        required: false
+    },
+    lastSeen: {
+        type: Date,
+        required: false
+    },
+    dob : {
+        type: Date,
+        required: false
+    },
+    gender: {
+        type: String,
+        enum: {
+            values: ['male', 'female', 'other'],
+            message: '{VALUE} is not a valid gender'
+        },
+        required: false
     }
 }, {timestamps: true})
 
