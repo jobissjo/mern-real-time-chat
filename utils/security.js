@@ -3,14 +3,17 @@ import fs from 'fs/promises';
 import path from 'path';
 import logger from '../config/loggerConfig.js';
 import { CustomError } from './helper.js';
+import { PRIVATE_KEY, PUBLIC_KEY } from '../config/constants.js';
 
-const publicKeyPath = path.resolve(process.cwd(), 'public.pem');
-const privateKeyPath = path.resolve(process.cwd(), 'private.pem');
+
 
 const loadKeys = async () => {
     try {
-        const publicKey = await fs.readFile(publicKeyPath, { encoding: 'utf8' });
-        const privateKey = await fs.readFile(privateKeyPath, { encoding: 'utf8' });
+        const privateKey = PRIVATE_KEY;
+        const publicKey = PUBLIC_KEY;
+        if(!privateKey || !publicKey){
+            throw new Error("Missing RSA keys in environment variables");
+        }
         return [privateKey, publicKey];
     } catch (error) {
         logger.error(`Error loading keys: ${error.message}`);

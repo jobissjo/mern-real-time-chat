@@ -30,3 +30,8 @@ export const CLOUDINARY_API_KEY = process.env.CLOUDINARY_API_KEY;
 
 export const PORT = process.env.PORT || 5000;
 export const HOST = process.env.HOST || '0.0.0.0';
+
+
+export const PRIVATE_KEY = process.env.PRIVATE_KEY?.replace(/\\n/g, '\n');
+export const PUBLIC_KEY = process.env.PUBLIC_KEY?.replace(/\\n/g, '\n');
+
